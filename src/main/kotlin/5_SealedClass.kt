@@ -1,7 +1,5 @@
 package main.kotlin
 
-import kotlin.AssertionError
-
 sealed class Item(val name: String)
 
 class Weapon(name: String): Item(name) {
@@ -22,19 +20,26 @@ class Armor(name: String): Item(name) {
     }
 }
 
-interface Checker {
-    fun validate(item: Item)
-}
-
-object WeaponChecker : Checker {
-    override fun validate(item: Item) {
-        if (item.name.isEmpty()) {
-            throw AssertionError(item)
+fun execute(item: Item) {
+    val type = when (item) {
+        is Weapon -> { // smart cast to Weapon
+            item.doDamage()
+            "weapon"
+        }
+        is Utility -> {
+            item.doUsefulStuff()
+            "utility"
+        }
+        is Armor -> {
+            item.protect()
+            "armor"
         }
     }
+    println(type)
 }
 
 fun main() {
-    WeaponChecker.validate(Weapon("sword"))
-    WeaponChecker.validate(Weapon(""))
+    execute(Weapon("sword"))
+    execute(Utility("scanner"))
+    execute(Armor("helmet"))
 }

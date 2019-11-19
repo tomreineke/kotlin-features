@@ -3,7 +3,7 @@ package main.kotlin
 abstract class AbstractDetail
 
 class DetailA(var name : String) : AbstractDetail() {
-    fun printDetail() {
+    fun printDetail() { // string interpolation
         println("DetailA with name $name executing printDetails()")
     }
 }
@@ -35,6 +35,20 @@ inline fun <reified D : AbstractDetail, T : Any> complexInit(
 
 fun main() {
     complexInit(::DetailA, "A") { printDetail() }
+    // gets replaces by compiler with something like
+    /*
+    fun <T : Any> complexInitDetailA(
+        factory: (T) -> DetailA,
+        parameter: T,
+        init: DetailA.() -> Unit = {}
+    ): DetailA {
+        val someDetail = factory(parameter)
+        someDetail.init()
+        return someDetail
+    }
+     */
+
+    // in Java only possible with reflection -> evaluation only at runtime not at compile time
     complexInit(::DetailB, 0L) { runTests() }
     println("Sum of two random elements in DetailC: "
             + complexInit(::DetailC, mutableListOf(Math.random())) { addRandomElement() }.list.sum()
