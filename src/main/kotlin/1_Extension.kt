@@ -1,5 +1,9 @@
 package main.kotlin
 
+/*
+ * You can define extensions to existing code (e.g. from libraries) to avoid inheritance.
+ */
+
 fun List<String>.myMax(): String {
     var biggest = ""
     this.forEach {

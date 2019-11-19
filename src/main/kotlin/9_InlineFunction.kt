@@ -1,8 +1,12 @@
 package main.kotlin
 
+/*
+ * Inline functions can make the code more concise, i.e. reduce boiler plate.
+ */
+
 abstract class AbstractDetail
 
-class DetailA(var name : String) : AbstractDetail() {
+class DetailA(private var name : String) : AbstractDetail() {
     fun printDetail() { // string interpolation
         println("DetailA with name $name executing printDetails()")
     }
@@ -25,8 +29,9 @@ inline fun <reified D : AbstractDetail, T : Any> complexInit(
     parameter: T,
     init: D.() -> Unit = {} // default value is do nothing
 ): D {
+    println("initializing ${D::class.simpleName} with parameter $parameter")
     // complex code you want to hide from API users
-    // e. g. not always create new object with factory but use an existing one
+    // e.g. not always create new object with factory but use an existing one
     // ...
     val someDetail = factory(parameter)
     someDetail.init()

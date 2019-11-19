@@ -2,6 +2,10 @@ package main.kotlin
 
 import kotlin.AssertionError
 
+/*
+ * Singletons exist out of the box in Kotlin. Simply use object as a construct.
+ */
+
 interface Checker {
     fun validate(item: Item)
 }

@@ -1,5 +1,9 @@
 package main.kotlin
 
+/*
+ * Kotlin allows object-functional programming.
+ */
+
 // Adapted from https://kotlinlang.org/docs/reference/lambdas.html
 class HTML(var name : String) {
     fun body() {
