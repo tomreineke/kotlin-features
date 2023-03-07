@@ -1,5 +1,7 @@
 package test.kotlin
 
+import java.io.IOException
+
 /*
  * Refactor the following controller to make it more concise.
  */
@@ -14,8 +16,10 @@ object RestController {
         val client = getClient(region, environment)
         return try {
             client.getVehicle(vin)
-        } catch (e: Exception) {
+        } catch (e: IOException) {
             throw IllegalStateException(e)
+        } catch (e: UnsupportedOperationException) {
+            throw NotImplementedError(e.toString())
         }
     }
 
@@ -27,8 +31,10 @@ object RestController {
         val client = getClient(region, environment)
         return try {
             client.postVehicle(vin)
-        } catch (e: Exception) {
+        } catch (e: IOException) {
             throw IllegalStateException(e)
+        } catch (e: UnsupportedOperationException) {
+            throw NotImplementedError(e.toString())
         }
     }
 
@@ -40,8 +46,10 @@ object RestController {
         val client = getClient(region, environment)
         return try {
             client.deleteVehicle(vin)
-        } catch (e: Exception) {
+        } catch (e: IOException) {
             throw IllegalStateException(e)
+        } catch (e: UnsupportedOperationException) {
+            throw NotImplementedError(e.toString())
         }
     }
 

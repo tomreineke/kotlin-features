@@ -1,6 +1,6 @@
 package test.kotlin
 
-
+import java.io.IOException
 
 
 
@@ -99,17 +99,6 @@ package test.kotlin
 
 class RestControllerImproved {
 
-    private fun <R : Any> handleClientResponse(
-        client: Client,
-        block: Client.() -> R
-    ): R {
-        return try {
-            client.block()
-        } catch (e: Exception) {
-            throw IllegalStateException(e)
-        }
-    }
-
     fun getVehicle(
         region: String,
         environment: String,
@@ -137,6 +126,19 @@ class RestControllerImproved {
     ): Int {
         return handleClientResponse(getClient(region, environment)) {
             deleteVehicle(vin)
+        }
+    }
+
+    private fun <R : Any> handleClientResponse(
+        client: Client,
+        block: Client.() -> R
+    ): R {
+        return try {
+            client.block()
+        } catch (e: IOException) {
+            throw IllegalStateException(e)
+        } catch (e: UnsupportedOperationException) {
+            throw NotImplementedError(e.toString())
         }
     }
 
