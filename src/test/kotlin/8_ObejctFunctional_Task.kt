@@ -1,4 +1,4 @@
-package main.kotlin
+package test.kotlin
 
 /*
  * Refactor the following controller to make it more concise.
